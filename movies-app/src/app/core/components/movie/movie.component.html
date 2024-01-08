@@ -1,0 +1,21 @@
+<div class="card-group">
+    
+    <div  *ngIf="arFlag; then contentTemplate else imgTemplate"></div>
+    <div  *ngIf="arFlag; then imgTemplate else contentTemplate"></div>
+    </div>
+
+    <ng-template #imgTemplate>    
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center" [ngClass]="{'flex-row-reverse': arFlag}">
+                <h5 class="card-title">{{movie.title}}</h5>
+                <p class="card-text" ><small class="text-muted">Release Date : {{ movie.releaseDate }} <span class="badge bg-secondary"> Rated : {{movie.voteAverage }} /10</span></small></p>  
+               
+              </div> 
+          <img class="card-img-top" [src]="'https://image.tmdb.org/t/p/original'+movie.backdropPath" alt="Card image cap">     
+        </div> 
+    </ng-template>
+    <ng-template  #contentTemplate>
+        <div class="card movie-content-card">   
+            <p class="card-text" [ngClass]="{'movie-disc-ar': arFlag}">{{movie.description}}</p>
+       </div>
+    </ng-template>

@@ -1,0 +1,19 @@
+.example-card {
+    max-width: 250px;
+    padding: 7px;
+  
+  }
+  .movie-card-container{
+    overflow: hidden;
+  }
+ 
+  .fix{
+    height: 60px;
+    font-size: 15px;
+    white-space: nowrap; 
+  }
+  .text-switch-dir{
+    direction: rtl;
+    text-align: right;
+
+  }

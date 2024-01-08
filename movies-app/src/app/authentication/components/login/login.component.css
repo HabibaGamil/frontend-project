@@ -1,0 +1,10 @@
+
+ .card-group-with-bg {
+    background-image: url('movie.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 20px; /* Adjust padding as needed */
+  }
+  .full-height-container {
+    min-height: 100vh;
+  }

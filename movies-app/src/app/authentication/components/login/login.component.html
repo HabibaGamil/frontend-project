@@ -1,0 +1,40 @@
+
+<div class="card-group p-2 p-sm-3 p-md-4 p-lg-5 p-xl-5 card-group-with-bg full-height-container ">
+    <div class="card  mx-auto" style="max-width: 500px; max-height: 350px;">
+        <div class="card-header">
+           <h5 class="mx-auto">Login</h5> 
+        </div>   
+      <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" class="login-card-form p-md-3 p-lg-4"  >
+        <div class="alert alert-danger" style="max-height:40px;" *ngIf="error">
+          <p style="font-size :15px;">Wrong Username or Password</p>
+        </div>
+        <div class="form-group m-3">
+          <label for="email">E-Mail</label>
+          <input 
+          type="email" 
+          id="email" 
+          class="form-control"
+          ngModel
+          name="email"
+          required
+          email />
+        </div>
+        <div class="form-group m-3">
+          <label for="password">Password</label>
+          <input 
+          type="password" 
+          id="password" 
+          class="form-control"
+          ngModel
+          name="password"
+          required
+          minlength="8" />
+        </div>
+        <div class="login-button m-3 d-flex">
+          <button class="btn btn-primary mx-auto"  [disabled]="!authForm.valid">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
