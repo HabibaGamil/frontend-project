@@ -21,8 +21,12 @@ export class LoginComponent {
 
     this.authService.login(authForm.form.value)
     .subscribe(()=>{
+      console.log("in subscribe function")
       this.loading=false;
-      this.router.navigate(['explore'])
+      this.router.navigate(['/explore'])
+    }, 
+    ()=>{
+      this.error=true;
     })
     
   }
