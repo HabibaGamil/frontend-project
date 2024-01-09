@@ -49,7 +49,7 @@ export class MovieService {
                  })             
             );
       }
-    getMovie(id: number): Observable<any> {
+    getMovie(id: string): Observable<any> {
 
       var params: HttpParams =new HttpParams()
       if(this.appSettings.getLanguage()=='ar'){

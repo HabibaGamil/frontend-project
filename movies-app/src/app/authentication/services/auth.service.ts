@@ -11,16 +11,27 @@ export class AuthService {
 
   authSubject = new BehaviorSubject<boolean>(false);
   private dataUrl = '../users.json'; 
-  private users : User[] = data;
+  private user :boolean = false;
+ // private users : User[] = data;
 
   constructor(private http: HttpClient) { 
-    console.log("I was here")
-    console.log(this.users)
+   // console.log(this.users)
+  }
+  ngOnInit(){
+    console.log("auth service init")
+  }
+  getUser(): boolean{
+     return this.user;
   }
 
   login(userData: User): Observable<boolean> {
+    this.user=true;
+    return of(true).pipe(
+      tap(
+        ()=>{
+          this.user=true;
+          this.authSubject.next(true)}));
 
-    return of(true).pipe(tap(()=>{this.authSubject.next(true)}));
 
     var foundUser: boolean = false;
 

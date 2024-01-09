@@ -18,9 +18,12 @@ export class MoviesComponent {
   constructor(private movieService: MovieService, private appSettings: AppSettingsService) {}
 
   ngOnInit(){
-    this.getMovies()
+    this.subscribeToLangSubject()
+   
+  }
+  subscribeToLangSubject(){
     this.appSettings.languageSubject.subscribe((lang)=>{
-
+      this.loading=true;
       if (lang=='ar'){
         this.arFlag=true;
       }else {
@@ -31,6 +34,7 @@ export class MoviesComponent {
       this.getMovies();
 
     })
+
   }
   getMovies(){
     this.loading=true;

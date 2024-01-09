@@ -1,8 +1,8 @@
-<div class="card-group">
+<div *ngIf="!loading"  class="card-group">
     
     <div  *ngIf="arFlag; then contentTemplate else imgTemplate"></div>
     <div  *ngIf="arFlag; then imgTemplate else contentTemplate"></div>
-    </div>
+</div>
 
     <ng-template #imgTemplate>    
         <div class="card">
@@ -19,3 +19,8 @@
             <p class="card-text" [ngClass]="{'movie-disc-ar': arFlag}">{{movie.description}}</p>
        </div>
     </ng-template>
+ 
+    <div *ngIf="loading" class="conainer-fluid d-flex">
+    <div class="spinner-border mx-auto spinner-styles" role="status">
+    </div>
+   </div>

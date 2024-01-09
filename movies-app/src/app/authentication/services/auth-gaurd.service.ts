@@ -18,15 +18,13 @@ export class AuthGaurdService implements CanActivate {
     | UrlTree
     | Promise<boolean | UrlTree>
     | Observable<boolean | UrlTree> {
-    return this.authService.authSubject.pipe(
-      take(1),
-      map((flag) => {
-        if (flag) {
-          return true;
-        }
+    
+      var isAuthenticated = this.authService.getUser();
+      console.log("auth "+isAuthenticated)
+      if(isAuthenticated){
+         return true;
+      }
         return this.router.createUrlTree(['/login']);
-      })
- 
-    );
+      
 }
 }

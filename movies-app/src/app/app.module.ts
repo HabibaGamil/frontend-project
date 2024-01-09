@@ -28,7 +28,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
     ],
     exports: [
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AppRoutingModule
     ]
    
 })

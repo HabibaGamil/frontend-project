@@ -1,8 +1,7 @@
+
 <nav *ngIf="loginFlag" class="navbar navbar-expand-lg navbar-dark bg-dark" >
-
-
-  
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+  <div class="container-fluid">
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -11,19 +10,31 @@
       <div *ngIf="arFlag; then HomeListTemplate else SettingsListTemplate"></div>
   
     </div>
-
+  </div>
   </nav>
+
+
+
+  
+ 
+    <nav *ngIf="!loginFlag" class="navbar navbar-expand-lg navbar-dark bg-dark" >
+      <div class="container-fluid">
+        <a class="navbar-brand">TMBD</a>
+      </div>
+    </nav>
+
 
   <ng-template #HomeListTemplate>
     <ul  class="navbar-nav" [ngClass]="{'ms-auto': arFlag , 'mr-auto':!arFlag , 'switch-direction': arFlag}">
       <li>
         <a class="navbar-brand" href="#">TMBD</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
+      <li class="nav-item active" routerLink="explore">
+        <a class="nav-link" >Home</a>
       </li>
     </ul>   
   </ng-template>
+
 
   <ng-template #SettingsListTemplate>
     <ul class="navbar-nav" [ngClass]="{'ms-auto': !arFlag , 'mr-auto':arFlag , 'switch-direction': arFlag }" >
