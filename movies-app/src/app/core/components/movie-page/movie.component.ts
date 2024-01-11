@@ -11,19 +11,31 @@ import { MovieService } from '../../services/movie.service';
 })
 export class MovieComponent {
 
-  @Input()
-  movie! : Movie;
+ 
+  movie: Movie ={
+    id : '',
+    title : '',
+    description: '',
+    posterPath: '',
+    backdropPath: '',
+    voteAverage: '',
+    releaseDate: ''
+  };
   arFlag = false;
   loading = false;
   id: string='';
 
   constructor( private movieService: MovieService, private route: ActivatedRoute, private appSettings: AppSettingsService){
-    this.id = this.route.snapshot.params['id']
+    
   }
 
-  ngOnInit(){  
+  ngOnInit(){
+     this.getId() 
      this.loading=true;
      this.subscribeToLangSubject();
+  }
+  getId(){
+    this.id = this.route.snapshot.params['id']
   }
   subscribeToLangSubject(){
     this.appSettings.languageSubject

@@ -10,34 +10,48 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
 
   authSubject = new BehaviorSubject<boolean>(false);
-  private user :boolean = false;
 
+  isAuthenticated$: Observable<boolean> = this.authSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
-  ngOnInit(){
-    console.log("auth service init")
-  }
-  getUser(): boolean{
-     return this.user;
+  private redirectURL: string = '/explore'
+
+  constructor(private http: HttpClient) { 
+    this.isLoggedIn();
   }
 
+  isLoggedIn():boolean{ 
+    if(localStorage.getItem('uid')){
+      this.authSubject.next(true);
+      return true;
+    }
+    return false; 
+  }
+  getRedirectURL(){
+    return this.redirectURL;
+  }
+  setRedirectURL(url:string){
+    this.redirectURL=url;
+  }
   login(userData: User): Observable<any> {
 
-    return this.http.post(environment.firebase.signInURL,
+    var url :string = environment.firebase.signInURL;
+    
+    return this.http.post<any>(url,
       {
         email: userData.email,
         password: userData.password,
         returnSecureToken: true
 
       }).pipe(
-      map((data)=>{
-        return data;             
-      }),
-      tap((data)=>{
+       tap((data)=>{
          console.log(data)
-         this.user=true;
+         localStorage.setItem('uid',data.uid);
          this.authSubject.next(true)
       })     
     );
+  }
+  logout(){
+    localStorage.removeItem('uid');
+    this.authSubject.next(false)
   }
 }

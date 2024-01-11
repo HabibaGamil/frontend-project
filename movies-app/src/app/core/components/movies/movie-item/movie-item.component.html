@@ -1,0 +1,10 @@
+<div class="movie-card m-2">
+<mat-card (click)="viewMovie()"> 
+    <img mat-card-image [src]="'https://image.tmdb.org/t/p/original'+movie.posterPath">
+ <div>
+  <mat-card-header class="movie-card-container fix-header">
+    <p> {{movie.title}}</p>
+  </mat-card-header>
+</div>
+</mat-card>
+</div>

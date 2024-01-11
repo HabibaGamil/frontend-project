@@ -1,19 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MoviesComponent } from './components/movies/movies.component';
-import { MovieItemComponent } from './components/movie-item/movie-item.component';
+import { MovieItemComponent } from './components/movies/movie-item/movie-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { MovieComponent } from './components/movie/movie.component';
-
+import { MovieComponent } from './components/movie-page/movie.component';
 
 
 @NgModule({
   declarations: [  
     MoviesComponent,
     MovieItemComponent,
-    NavbarComponent,
     MovieComponent
 
   ],
@@ -24,7 +21,6 @@ import { MovieComponent } from './components/movie/movie.component';
   ],
   exports: [
     MoviesComponent,
-    NavbarComponent,
     MovieComponent
   ]
 })

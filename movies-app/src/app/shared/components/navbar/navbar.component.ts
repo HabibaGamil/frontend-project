@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AppSettingsService } from '../../services/app-settings.service';
-import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../authentication/services/auth.service';
+import { AppSettingsService } from '../../../core/services/app-settings.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +9,14 @@ import { AuthService } from '../../../authentication/services/auth.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  
 
-  //This flag indicates if arabic setting is chosen in the app
   arFlag : boolean = false;
   loginFlag: boolean = false;
 
-  constructor(private appSettings : AppSettingsService, private authServie :AuthService){
-  }
+  constructor(private appSettings : AppSettingsService,
+              private authService :AuthService,
+              private router: Router){}
   ngOnInit(){
     this.subscribeToLangSubject();
     this.subscribleToAuthSubject();
@@ -24,7 +25,6 @@ export class NavbarComponent {
   subscribeToLangSubject(){
     this.appSettings.languageSubject
     .subscribe((lang)=>{ 
-      console.log(lang)
       if (lang=='ar'){
         this.arFlag=true;
       }else {
@@ -33,9 +33,8 @@ export class NavbarComponent {
       })
   }
   subscribleToAuthSubject(){
-    this.authServie.authSubject
+    this.authService.authSubject
     .subscribe((login)=>{
-        console.log("in navbar function "+ login)
         this.loginFlag=login;
       
     })
@@ -43,4 +42,15 @@ export class NavbarComponent {
   toggleLanguage(){
     this.appSettings.toggleLanguage();
   }
+
+  goToHome(){
+    this.router.navigate(['/explore'])
+  }
+  logout(){
+    this.authService.logout();
+    this.router.navigate(['/login'])
+  }
+
+
+
 }

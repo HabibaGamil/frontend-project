@@ -1,15 +1,16 @@
-
-<div class="card-group p-2 p-sm-3 p-md-4 p-lg-5 p-xl-5 card-group-with-bg full-height-container ">
-    <div class="card  mx-auto shadow-lg" style="max-width: 500px; max-height: 350px; border: none">
+<div class="container page-size-container  card-group-with-bg">
+ <div class="card-group p-2 p-sm-3 p-md-4 p-lg-5 p-xl-5">
+    <div class="card  mx-auto shadow-lg login-card" >
         <div class="card-header text-white bg-dark d-flex">
            <h5 class="mx-auto">Login</h5> 
         </div>   
       <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" class="login-card-form p-md-3 p-lg-4"  >
-        <div class="alert alert-danger" style="max-height:40px;" *ngIf="error">
-          <p style="font-size :15px;">Wrong Username or Password</p>
-        </div>
+          <p *ngIf="error" class="alert alert-danger alert-sm">Wrong Username or Password</p>  
         <div class="form-group m-3">
+          <div class="d-flex">
           <label for="email">E-Mail</label>
+          <p  *ngIf="invalid.email" class="text-danger px-2">Please input valid email</p>
+          </div>
           <input 
           type="email" 
           id="email" 
@@ -20,7 +21,10 @@
           email />
         </div>
         <div class="form-group m-3">
-          <label for="password">Password</label>
+          <div class="d-flex mx-auto">
+            <label for="password">Password</label>
+            <p  *ngIf="invalid.password" class="text-danger px-2"> Password must be at least 8 charecters</p>
+            </div>
           <input 
           type="password" 
           id="password" 
@@ -28,13 +32,17 @@
           ngModel
           name="password"
           required
-          minlength="8" />
+          minlength="8"/>
         </div>
         <div class="login-button m-3 d-flex">
-          <button class="btn btn-primary mx-auto"  [disabled]="!authForm.valid">Login</button>
+
+          <button class="btn btn-primary mx-auto">
+            <span  *ngIf="btnLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Login</button>
         </div>
       </form>
     </div>
   </div>
+</div>
 
 

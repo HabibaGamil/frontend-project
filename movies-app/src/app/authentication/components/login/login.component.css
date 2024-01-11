@@ -3,8 +3,13 @@
     background-image: url('movie.jpg');
     background-size: cover;
     background-position: center;
-    padding: 20px; /* Adjust padding as needed */
+  
   }
-  .full-height-container {
+  .page-size-container {
     min-height: 100vh;
+    min-width: 100vw;
+  }
+  .login-card{
+    max-width: 31.25rem;
+     border: none;
   }

@@ -11,8 +11,10 @@ import { AppSettingsService } from './app-settings.service';
 })
 export class MovieService {
 
+
   private url : string = environment.apiURL ;
   headers: HttpHeaders = new HttpHeaders ({'Authorization': 'bearer ' +environment.apiToken})
+ 
 
 
   movieSubject : Subject<Movie[]> = new Subject<Movie[]>();
@@ -33,7 +35,6 @@ export class MovieService {
            .pipe(
             map(data => {
               var movies: Movie[] = [];
-              console.log(data["results"])
               Object.values(data["results"])
               .forEach((obj)=> {
                 movies.push({ 
@@ -55,7 +56,7 @@ export class MovieService {
       if(this.appSettings.getLanguage()=='ar'){
         params= params.set("language","ar-SA")
      }                       
-      return this.http.get<{ [propKey: string]: string }>(this.url+'movie/'+id, {headers : this.headers, params: params})
+      return this.http.get<any>(this.url+'movie/'+id, {headers : this.headers, params: params})
       .pipe(
        map(data => {
         var movie: Movie = { 
@@ -67,7 +68,6 @@ export class MovieService {
             voteAverage : data["vote_average"],
             releaseDate : data["release_date"]
           }       
-        console.log(data)
         return movie   
            })             
        );

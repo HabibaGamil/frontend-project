@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Movie } from '../../movie';
+import { Movie } from '../../../movie';
 
 @Component({
   selector: 'app-movie-item',
@@ -15,7 +15,6 @@ export class MovieItemComponent {
   constructor(private router: Router){}
 
   viewMovie(){
-    console.log("in view Movie")
     this.router.navigate(['/movie/'+ this.movie.id], {state: {movie : this.movie}})
   }
 

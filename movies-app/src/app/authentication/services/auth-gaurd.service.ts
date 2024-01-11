@@ -19,12 +19,17 @@ export class AuthGaurdService implements CanActivate {
     | Promise<boolean | UrlTree>
     | Observable<boolean | UrlTree> {
     
-      var isAuthenticated = this.authService.getUser();
-      console.log("auth "+isAuthenticated)
-      if(isAuthenticated){
-         return true;
-      }
-        return this.router.createUrlTree(['/login']);
-      
+        return this.authService.isAuthenticated$.pipe(
+          take(1), // Take only the first value
+          map(isAuthenticated => {
+            if (isAuthenticated) {
+              return true;
+            }
+            var urlSegments = route.url;
+            var url : string = urlSegments.map(segment => segment.path).join('/');
+            this.authService.setRedirectURL(url)
+            return this.router.createUrlTree(['/login']);  
+          })
+        );     
 }
 }
