@@ -2,7 +2,7 @@ import { formatCurrency } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  loading: boolean=false;
   btnLoading: boolean =false;
   error: boolean= false;
   invalid : any = {
@@ -20,9 +21,18 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router){}
 
   ngOnInit(){
-    this.loggedInCheck();
+    this.loading=true;
+    this.authService.isAuthenticated()?.subscribe((data)=>{
+      console.log(data)
+      this.loading=false;
+      this.router.navigate([this.authService.getRedirectURL()])
+    },(error)=>{
+      console.log("Error"+ error)
+      this.loading=false;
+    });
     
   }
+
   
   resetFormResponse(){
     this.invalid.email=false;
@@ -58,12 +68,8 @@ export class LoginComponent {
   }
     
   }
-  loggedInCheck(){
-    var bool :boolean =this.authService.isLoggedIn()
-    if(bool){
-      this.router.navigate(['/explore'])
-    }
-
+  signup(){
+    this.router.navigate(['/signup'])
   }
 
 

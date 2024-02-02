@@ -1,4 +1,4 @@
-<div class="container page-size-container  card-group-with-bg">
+<div *ngIf="!loading" class="container page-size-container  card-group-with-bg">
  <div class="card-group p-2 p-sm-3 p-md-4 p-lg-5 p-xl-5">
     <div class="card  mx-auto shadow-lg login-card" >
         <div class="card-header text-white bg-dark d-flex">
@@ -34,15 +34,18 @@
           required
           minlength="8"/>
         </div>
-        <div class="login-button m-3 d-flex">
+        <div class="login-button m-3 d-flex flex-column">
 
           <button class="btn btn-primary mx-auto">
             <span  *ngIf="btnLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Login</button>
+            Login</button>  
+            <a class="mx-auto" (click)="signup()">Don't have an account? Signup </a>       
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<app-verify *ngIf="loading" />
 
 

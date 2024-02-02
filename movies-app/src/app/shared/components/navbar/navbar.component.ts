@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../authentication/services/auth.service';
-import { AppSettingsService } from '../../../core/services/app-settings.service';
+import { AuthService } from '../../../authentication/services/auth/auth.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -10,28 +10,15 @@ import { AppSettingsService } from '../../../core/services/app-settings.service'
 })
 export class NavbarComponent {
   
-
-  arFlag : boolean = false;
   loginFlag: boolean = false;
 
-  constructor(private appSettings : AppSettingsService,
-              private authService :AuthService,
+  constructor(private authService :AuthService,
               private router: Router){}
   ngOnInit(){
-    this.subscribeToLangSubject();
     this.subscribleToAuthSubject();
     
   }
-  subscribeToLangSubject(){
-    this.appSettings.languageSubject
-    .subscribe((lang)=>{ 
-      if (lang=='ar'){
-        this.arFlag=true;
-      }else {
-        this.arFlag=false;
-      }
-      })
-  }
+  
   subscribleToAuthSubject(){
     this.authService.authSubject
     .subscribe((login)=>{
@@ -40,15 +27,17 @@ export class NavbarComponent {
     })
   }
   toggleLanguage(){
-    this.appSettings.toggleLanguage();
+    //this.appSettings.toggleLanguage();
   }
 
   goToHome(){
     this.router.navigate(['/explore'])
   }
   logout(){
-    this.authService.logout();
-    this.router.navigate(['/login'])
+    this.authService.logout()?.subscribe(()=>{
+      this.router.navigate(['/login'])
+    });
+    
   }
 
 

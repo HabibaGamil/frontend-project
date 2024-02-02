@@ -1,7 +1,5 @@
 import { Component, HostListener } from '@angular/core';
 import { Movie } from '../../movie';
-import { AppSettingsService } from '../../services/app-settings.service';
-
 import { MovieService } from '../../services/movie.service';
 
 @Component({
@@ -15,27 +13,13 @@ export class MoviesComponent {
   loading: boolean = true;
   arFlag: boolean = true;
 
-  constructor(private movieService: MovieService, private appSettings: AppSettingsService) {}
+  constructor(private movieService: MovieService) {}
 
   ngOnInit(){
-    this.subscribeToLangSubject()
-   
+    this.getMovies()
   }
-  subscribeToLangSubject(){
-    this.appSettings.languageSubject.subscribe((lang)=>{
-      this.loading=true;
-      if (lang=='ar'){
-        this.arFlag=true;
-      }else {
-        this.arFlag=false;
-      }
-      this.movies=[];
-      this.batch=1;
-      this.getMovies();
 
-    })
 
-  }
   getMovies(){
     this.loading=true;
     this.movieService.getMovies(this.batch).subscribe(
@@ -53,7 +37,6 @@ onScroll(): void {
     const documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
 
     if (scrollPosition + windowHeight + 5 >= documentHeight &&  !this.loading) {
-    //  console.log('Scrolled to the bottom of the window');
       this.getMovies()
           
     }

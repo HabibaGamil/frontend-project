@@ -10,12 +10,20 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './authentication/interceptors/auth-interceptor.service';
+
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+    
     ],
-    providers: [],
+    providers: [ {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+      }],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

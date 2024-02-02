@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">TMBD</a>
+      <a class="navbar-brand">TMBD</a>
       <button
         *ngIf="loginFlag"
         class="navbar-toggler"
@@ -20,7 +20,7 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               id="navbarDropdownMenuLink"
@@ -35,7 +35,7 @@
                 arFlag ? "en - English" : "ar - عربي"
               }}</a>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item" (click)="logout()">
             <a class="nav-link">Logout</a>
           </li>

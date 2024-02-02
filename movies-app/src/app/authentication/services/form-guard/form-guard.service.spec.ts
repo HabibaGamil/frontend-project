@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AppSettingsService } from './app-settings.service';
+import { FormGuardService } from './form-guard.service';
 
-describe('AppSettingsService', () => {
-  let service: AppSettingsService;
+describe('FormGuardService', () => {
+  let service: FormGuardService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AppSettingsService);
+    service = TestBed.inject(FormGuardService);
   });
 
   it('should be created', () => {

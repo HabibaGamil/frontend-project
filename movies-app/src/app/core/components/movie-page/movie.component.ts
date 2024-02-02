@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../authentication/services/auth/auth.service';
 import { Movie } from '../../movie';
-import { AppSettingsService } from '../../services/app-settings.service';
 import { MovieService } from '../../services/movie.service';
 
 @Component({
@@ -19,41 +19,44 @@ export class MovieComponent {
     posterPath: '',
     backdropPath: '',
     voteAverage: '',
+    voteCount: '',
     releaseDate: ''
   };
   arFlag = false;
   loading = false;
   id: string='';
 
-  constructor( private movieService: MovieService, private route: ActivatedRoute, private appSettings: AppSettingsService){
+  constructor( private movieService: MovieService, 
+               private route: ActivatedRoute, 
+               private router: Router,
+               private authService: AuthService){
     
   }
 
   ngOnInit(){
      this.getId() 
      this.loading=true;
-     this.subscribeToLangSubject();
+     this.getMovie(this.id);
+  
   }
   getId(){
     this.id = this.route.snapshot.params['id']
   }
-  subscribeToLangSubject(){
-    this.appSettings.languageSubject
-    .subscribe((lang)=>{ 
-     if (lang=='ar'){
-       this.arFlag=true;
-     }else {
-       this.arFlag=false;
-     }
-     this.loading=true;
-     this.getMovie(this.id);
-     })
-  }
+
   getMovie(id:string){
     this.movieService.getMovie(id)
     .subscribe((data)=> {
+      console.log(data)
       this.movie=data;
       this.loading=false;
+    },
+    (error)=>{
+    
+      if(error.status==403){
+        this.authService.tokenExpired();
+        this.router.navigate(['/login'])
+      }
+      //else movie not found
     })
   }
 

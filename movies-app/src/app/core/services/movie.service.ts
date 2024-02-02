@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Movie } from '../movie';
-import { AppSettingsService } from './app-settings.service';
+
 
 
 @Injectable({
@@ -20,57 +20,33 @@ export class MovieService {
   movieSubject : Subject<Movie[]> = new Subject<Movie[]>();
 
 
-  constructor( private http: HttpClient, private appSettings: AppSettingsService) { }
+  constructor( private http: HttpClient) { }
 
 
   getMovies(batch:number): Observable<any> {
-    var params: HttpParams =new HttpParams()
-                           .set('page', batch)
-                           .set('sort_by',environment.sortBy)
+
+    var params: HttpParams =new HttpParams().set('page', batch)
+     var url = environment.backend.pageURL               
                     
-    if(this.appSettings.getLanguage()=='ar'){
-       params= params.set("language","ar-SA")
-    } 
-    return this.http.get<{ [propKey: string]: Object }>(this.url+'discover/movie', {headers : this.headers, params: params})
+    return this.http.get<any>(url, {params: params})
            .pipe(
-            map(data => {
-              var movies: Movie[] = [];
-              Object.values(data["results"])
-              .forEach((obj)=> {
-                movies.push({ 
-                    id : obj["id"],
-                    title: obj["title"],
-                    description: obj["overview"],
-                    posterPath: obj["poster_path"],
-                    backdropPath:  obj["backdrop_path"],
-                    voteAverage : obj["vote_average"],
-                    releaseDate : obj["release_date"]
-                  })})            
-                  return movies    
+            map(response => {
+              var movies: Movie[] = response.data;
+              return movies  
                  })             
             );
       }
     getMovie(id: string): Observable<any> {
-
-      var params: HttpParams =new HttpParams()
-      if(this.appSettings.getLanguage()=='ar'){
-        params= params.set("language","ar-SA")
-     }                       
-      return this.http.get<any>(this.url+'movie/'+id, {headers : this.headers, params: params})
+      
+      var url  = environment.backend.movieURl;           
+      return this.http.get<any>(url+id)
       .pipe(
-       map(data => {
-        var movie: Movie = { 
-            id : data["id"],
-            title: data["title"],
-            description: data["overview"],
-            posterPath: data["poster_path"],
-            backdropPath:  data["backdrop_path"],
-            voteAverage : data["vote_average"],
-            releaseDate : data["release_date"]
-          }       
-        return movie   
-           })             
+       map(response => {      
+        var movie :Movie=response.data[0];       
+        return movie  
+       })             
        );
 
     }
 }
+
