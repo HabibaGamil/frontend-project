@@ -23,11 +23,9 @@ export class LoginComponent {
   ngOnInit(){
     this.loading=true;
     this.authService.isAuthenticated()?.subscribe((data)=>{
-      console.log(data)
       this.loading=false;
       this.router.navigate([this.authService.getRedirectURL()])
-    },(error)=>{
-      console.log("Error"+ error)
+    },()=>{
       this.loading=false;
     });
     
@@ -61,9 +59,13 @@ export class LoginComponent {
       this.router.navigate([this.authService.getRedirectURL() || '/explore'])
     }, 
     (error)=>{
-      console.log(error)
+      if(error.status!=400){
+        this.router.navigate(['/server-error'])
+        return
+      }
       this.btnLoading=false;
       this.error=true;
+     
     })
   }
     

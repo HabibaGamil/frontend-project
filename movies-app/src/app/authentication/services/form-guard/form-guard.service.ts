@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import {take, map, Observable } from 'rxjs';
+import {take, map, Observable,last } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -22,8 +22,11 @@ export class FormGuardService implements CanActivate {
     | UrlTree> {
 
       return this.authService.isAuthenticated$.pipe(
-        take(1), // Take only the first value
+        take(1),
+        last(),
         map(isAuthenticated => {
+          console.log("in form guard")
+          console.log("is Authenticated " + isAuthenticated)
           if (!isAuthenticated) {
             return true;
           }

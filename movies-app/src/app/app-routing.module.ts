@@ -6,27 +6,19 @@ import { AuthGaurdService } from './authentication/services/auth-guard/auth-gaur
 import { FormGuardService } from './authentication/services/form-guard/form-guard.service';
 import { MovieComponent } from './core/components/movie-page/movie.component';
 import { MoviesComponent } from './core/components/movies/movies.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
 
 const routes: Routes = [
+
   {path: '', redirectTo: "explore", pathMatch:'full'},
-  {path: "signup", component: SignupComponent, canActivate: [FormGuardService]},
   {path: "login", component: LoginComponent,canActivate: [FormGuardService]},
+  {path: "signup", component: SignupComponent, canActivate: [FormGuardService]},
   {path: "explore", component: MoviesComponent,canActivate: [AuthGaurdService]},
-  {path: "movie/:id", component: MovieComponent,canActivate: [AuthGaurdService] }
-
-  
-  // loadChildren: ()=> 
-  // import('./core/core.module').then(
-  //    (mod) => mod.CoreModule
-  // )},
-
-    // loadChildren: ()=> 
-    // import('./authentication/authentication.module').then(
-    //   (mod) => mod.AuthenticationModule
-    // )},
-
- 
-   
+  {path: "movie/:id", component: MovieComponent,canActivate: [AuthGaurdService] },
+  {path: "page-not-found", component: PageNotFoundComponent},
+  {path: "server-error", component: ServerErrorComponent},
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

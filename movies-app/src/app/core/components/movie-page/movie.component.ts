@@ -46,17 +46,21 @@ export class MovieComponent {
   getMovie(id:string){
     this.movieService.getMovie(id)
     .subscribe((data)=> {
-      console.log(data)
       this.movie=data;
       this.loading=false;
     },
     (error)=>{
-    
-      if(error.status==403){
+      console.log(error.status)
+      if(error.status== 403){
         this.authService.tokenExpired();
+        const url = this.route.snapshot.url.join('/');
+        this.authService.setRedirectURL(url)
         this.router.navigate(['/login'])
       }
-      //else movie not found
+      if(error.status==0){
+        this.router.navigate(['/server-error'])
+      }
+      this.router.navigate(['/page-not-found'])
     })
   }
 

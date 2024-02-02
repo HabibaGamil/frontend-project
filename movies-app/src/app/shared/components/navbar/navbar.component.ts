@@ -26,10 +26,6 @@ export class NavbarComponent {
       
     })
   }
-  toggleLanguage(){
-    //this.appSettings.toggleLanguage();
-  }
-
   goToHome(){
     this.router.navigate(['/explore'])
   }

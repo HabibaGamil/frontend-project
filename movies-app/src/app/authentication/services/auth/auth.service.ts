@@ -27,6 +27,7 @@ export class AuthService {
   }
 
   isAuthenticated(): Observable<any>|null{ 
+    console.log("in is authenticated")
     var url :string = environment.backend.refreshURL;
     const refreshToken = this.cookieService.get('refresh_token');
     if(refreshToken==null){
