@@ -1,6 +1,6 @@
 .movie-card {
     max-width: 15.5rem;
-    /* padding: 0.5rem; */
+
   
   }
   .movie-card-container{
@@ -13,7 +13,7 @@
     white-space: nowrap; 
   }
   .movie-card:hover {
-    box-shadow: 0 1.25rem 1.6rem rgba(3, 3, 3, 0.1); /* Adjust shadow values as needed */
+    box-shadow: 0 1.25rem 1.6rem rgba(3, 3, 3, 0.1);
    
   }
  

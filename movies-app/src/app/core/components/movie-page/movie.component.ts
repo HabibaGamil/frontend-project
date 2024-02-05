@@ -52,14 +52,17 @@ export class MovieComponent {
     (error)=>{
       console.log(error.status)
       if(error.status== 403){
-        this.authService.tokenExpired();
+        this.authService.accessTokenExpired();
         const url = this.route.snapshot.url.join('/');
-        this.authService.setRedirectURL(url)
-        this.router.navigate(['/login'])
+        this.authService.setRedirectURL("discover/"+url)
+        this.router.navigate(['auth/login'])
+        return;
       }
       if(error.status==0){
         this.router.navigate(['/server-error'])
+        return;
       }
+      
       this.router.navigate(['/page-not-found'])
     })
   }

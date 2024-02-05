@@ -12,6 +12,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/interceptors/auth-interceptor.service';
+import { AuthService } from './authentication/services/auth/auth.service';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AuthInterceptor } from './authentication/interceptors/auth-interceptor.
         AppComponent,
     
     ],
-    providers: [ {
+    providers: [ 
+        {
         provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptor,
         multi: true

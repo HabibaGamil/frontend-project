@@ -15,7 +15,7 @@ export class MovieItemComponent {
   constructor(private router: Router){}
 
   viewMovie(){
-    this.router.navigate(['/movie/'+ this.movie.id], {state: {movie : this.movie}})
+    this.router.navigate(['discover/movie/'+ this.movie.id], {state: {movie : this.movie}})
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../authentication/services/auth/auth.service';
 import { Movie } from '../../movie';
 import { MovieService } from '../../services/movie.service';
 
@@ -14,15 +15,15 @@ export class MoviesComponent {
   loading: boolean = true;
   noMoreData : boolean = false;
 
-  constructor(private movieService: MovieService,private router: Router) {}
+  constructor(private movieService: MovieService,private router: Router, private authService: AuthService) {}
 
   ngOnInit(){
     this.getMovies()
   }
 
-
   getMovies(){
-    if(this.noMoreData){
+    if(this.batch>=4 || this.noMoreData){
+      this.noMoreData=true;
       return;
     }
     this.loading=true;
@@ -33,11 +34,12 @@ export class MoviesComponent {
         this.batch++;
       },(error)=>{
         
-         this.loading=false;
-        if(error.status== 400){
-           this.noMoreData=true;
-           return;
-        } 
+         this.loading=false; 
+        if(error.status== 403){
+          this.authService.accessTokenExpired();
+          this.router.navigate(['/auth/login'])
+          return;
+       }
         this.router.navigate(['/server-error']);
       });
      

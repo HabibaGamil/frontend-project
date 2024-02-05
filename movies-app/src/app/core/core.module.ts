@@ -5,6 +5,14 @@ import { MovieItemComponent } from './components/movies/movie-item/movie-item.co
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { MovieComponent } from './components/movie-page/movie.component';
+import { AuthGaurdService } from '../authentication/services/auth-guard/auth-gaurd.service';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  {path: "", component: MoviesComponent,canActivate: [AuthGaurdService]},
+  {path: "movie/:id", component: MovieComponent,canActivate: [AuthGaurdService] }
+
+];
 
 
 @NgModule({
@@ -17,7 +25,8 @@ import { MovieComponent } from './components/movie-page/movie.component';
   imports: [
     CommonModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    RouterModule.forChild(routes)
   ],
   exports: [
     MoviesComponent,

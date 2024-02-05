@@ -23,15 +23,13 @@ export class AuthGaurdService implements CanActivate {
           take(1),
           last(),
           map(isAuthenticated => {
-            console.log("in auth guard")
-            console.log("is Authenticated " + isAuthenticated)
             if (isAuthenticated) {
               return true;
             }
             var urlSegments = route.url;
             var url : string = urlSegments.map(segment => segment.path).join('/');
-            this.authService.setRedirectURL(url)
-            return this.router.createUrlTree(['/login']);  
+            this.authService.setRedirectURL("/discover/"+url)
+            return this.router.createUrlTree(['auth/login']);  
           })
         );     
 }

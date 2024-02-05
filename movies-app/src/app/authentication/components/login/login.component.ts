@@ -21,24 +21,38 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router){}
 
   ngOnInit(){
-    this.loading=true;
-    this.authService.isAuthenticated()?.subscribe((data)=>{
-      this.loading=false;
-      this.router.navigate([this.authService.getRedirectURL()])
-    },()=>{
-      this.loading=false;
-    });
-    
+    this.isAuthenticated(); 
+  }
+     
+  isAuthenticated(){
+
+    if(localStorage.getItem("access_token")!=null){
+      this.router.navigate(['/discover'])
+      return
+     }
+     const isAuthenticated$ = this.authService.isAuthenticated();
+
+     if (isAuthenticated$) {
+      this.loading=true;
+       isAuthenticated$.subscribe(
+         () => {
+           this.loading = false;
+           this.router.navigate([this.authService.getRedirectURL()]);
+         },
+         () => {
+           this.loading = false;
+         }
+       );
+     }
+
   }
 
-  
   resetFormResponse(){
     this.invalid.email=false;
     this.invalid.password=false;
     this.error=false;
   }
 
-  
   onSubmit(authForm: NgForm) {
 
     this.resetFormResponse();
@@ -52,11 +66,11 @@ export class LoginComponent {
         
     }
     if(authForm.form.valid==true){
-    this.btnLoading=true;
-    this.authService.login(authForm.form.value)
-    .subscribe(()=>{
-      this.btnLoading=false;
-      this.router.navigate([this.authService.getRedirectURL() || '/explore'])
+      this.btnLoading=true;
+      this.authService.login(authForm.form.value)
+       .subscribe(()=>{
+          this.btnLoading=false;
+          this.router.navigate([this.authService.getRedirectURL() || '/discover'])
     }, 
     (error)=>{
       if(error.status!=400){
@@ -67,12 +81,9 @@ export class LoginComponent {
       this.error=true;
      
     })
-  }
-    
+  }  
   }
   signup(){
-    this.router.navigate(['/signup'])
+    this.router.navigate(['auth/signup'])
   }
-
-
 }

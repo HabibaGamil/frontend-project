@@ -27,15 +27,13 @@ export class NavbarComponent {
     })
   }
   goToHome(){
-    this.router.navigate(['/explore'])
+    this.router.navigate(['/discover'])
   }
   logout(){
     this.authService.logout()?.subscribe(()=>{
-      this.router.navigate(['/login'])
+      this.router.navigate(['auth/login'])
     });
     
   }
-
-
 
 }

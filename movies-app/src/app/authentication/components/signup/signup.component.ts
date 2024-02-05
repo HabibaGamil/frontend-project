@@ -20,7 +20,13 @@ export class SignupComponent {
   constructor(private authService: AuthService, private router: Router){}
 
   ngOnInit(){
+     this.userExists();
+  }
 
+  userExists(){
+     if(localStorage.getItem("logged_in")=="1"){
+      this.router.navigate(['/discover'])
+     }
   }
 
   onSubmit(authForm: NgForm) {
@@ -45,10 +51,9 @@ export class SignupComponent {
     this.btnLoading=true;
     this.authService.signup(authForm.form.value).subscribe(()=>{
       this.btnLoading=false;
-      this.router.navigate([this.authService.getRedirectURL() || '/explore'])
+      this.router.navigate([this.authService.getRedirectURL() || '/discover'])
     }, 
-    (error)=>{
-      console.log(error)
+    ()=>{
       this.btnLoading=false;
       this.error=true;
     })
@@ -63,7 +68,7 @@ export class SignupComponent {
   }
 
   login(){
-    this.router.navigate(['/login'])
+    this.router.navigate(['auth/login'])
   }
 
 }
